@@ -1,0 +1,33 @@
+.variant-picker{
+  display: flex;
+  border: 0; 
+  padding:0; 
+  margin: 0 0 20px 0;
+}
+.variant-picker__variant-input{
+  opacity: 0;
+  margin: 0;
+  padding: 0;
+  z-index: -1;
+  position: absolute;
+}
+.variant-picker__variant-label{
+  height:52px; 
+  width:64px; 
+  background-size: cover;
+  transition: transform 0.3s ease;
+  cursor:pointer;
+}
+.variant-picker__variant-label:hover{
+  transform: scale(1.1);
+}
+.variant-picker__container{
+  display:flex; 
+  flex-direction: column;
+  align-items: center;
+  margin-right:16px; 
+  padding-bottom:5px;
+}
+.variant-picker__chosen{
+  border-bottom:2px solid #F8C063;
+}

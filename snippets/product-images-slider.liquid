@@ -1,0 +1,17 @@
+<script src="{{ 'product-images-slider.js' | asset_url }}" defer="defer"></script>
+{{ 'product-images-slider.css' | asset_url | stylesheet_tag }}
+ 
+<product-images-slider class="product-images-slider">
+  <div class="product-images-slider__featured-media">
+    <img id="current-variant-feature-media" class="product-images-slider__variant-feature-image" src="{{ featured_media | image_url }}" width="100%;" height="100%;" alt="{{ featured_media.alt }}">
+  </div>
+ <ul data-current-index="0" id="product-images" class="product-images-slider__product-media-list">
+       {% for media in product.media %}
+         <li data-media-alt="{{ media.alt }}" class="product-images-slider__product-media-element {% if media.alt != current_variant.featured_media.alt %}product-images-slider__product-media-element-hidden{% endif %}">
+           <img class="product-images-slider__product-image" src="{{ media | image_url }}" width="100%;" height="100%;">
+         </li>
+   {% endfor %}
+   </ul>
+  <button class="product-images-slider__button product-images-slider__button--prev-btn">{% render 'arrow-prev' %}</button>
+  <button class="product-images-slider__button product-images-slider__button--next-btn">{% render 'arrow-next' %}</button>
+</product-images-slider>

@@ -1,0 +1,265 @@
+{{ 'product-overview-section.css' | asset_url | stylesheet_tag }}
+
+{% liquid 
+ assign product = section.settings.product_reference 
+ assign current_variant = ""
+ if product.selected_variant 
+   assign current_variant = product.selected_variant 
+ else 
+  assign current_variant = product.selected_or_first_available_variant 
+ endif 
+ assign featured_media = current_variant.featured_media | default: product.featured_media  
+ 
+ assign initializedVariantsQuantityLimit = current_variant.inventory_quantity 
+ assign currentVariantInCart = cart | item_count_for_variant: current_variant.id 
+ assign currentlyAvailableVariantQuantityForUser = initializedVariantsQuantityLimit | minus: currentVariantInCart 
+
+assign variant_stock_information = ''
+for variant in product.variants
+   assign availableLimit = variant.inventory_quantity 
+   assign currentlyInCart = cart | item_count_for_variant: variant.id 
+   assign currentlyAvailableQuantityForUser = availableLimit | minus: currentlyInCart 
+   assign variantPrice = variant.price
+   assign variantCompareAtPrice = variant.compare_at_price | default: 0
+    
+    capture product_variant_json
+      echo '{'
+        echo '"id": ' | append: variant.id | append: ','
+        echo '"quantity_cart": ' | append: currentlyInCart | append: ','
+        echo '"quantity_stock": ' | append: availableLimit | append: ','
+        echo '"quantity_for_user": ' | append: currentlyAvailableQuantityForUser | append: ','
+        echo '"price": ' | append: variantPrice | append: ','
+        echo '"compare_at_price": ' | append: variantCompareAtPrice | append: ''
+      echo '}'
+    endcapture
+  
+   unless forloop.first
+    assign variant_stock_information = variant_stock_information | append: ','
+   endunless
+  assign variant_stock_information = variant_stock_information | append: product_variant_json
+endfor
+%}
+
+
+<section
+  id="ProductOverview-{{ section.id }}"
+  data-section="{{ section.id }}"
+  class="section-container"
+>
+
+<div class="product-overview-container product-overview-container_fex product-overview-container_row">
+
+  {% if section.settings.allow_modal %}
+   {% render 'feature-image-modal' %}
+  {% endif %}
+  
+  {% if section.settings.show_media %}
+   {% render 'product-images-slider', product: product, current_variant: current_variant, featured_media: featured_media %}
+  {% endif %}
+  
+  <div classs="product-overview-container__blocks-container">
+    {% for block in section.blocks %}
+      {%- case block.type -%}
+       {% when '@app' %}
+        <div class="ratings-starts">
+          {% render block %}
+        </div>
+        
+       {% when 'title' %}
+         <div class="product-overview-container__title-product">
+            <h1 class="product-overview-container__title-product__title product-overview-container_row_regular-font">
+             {{ product.title }}
+            </h1>
+          </div>
+        
+        {%- when 'description' -%}
+         <div class="product-overview-container__description-product">
+            <p class="product-overview-container__description-product__paragraph">
+             {{ product.description }}
+            </p>
+          </div>
+        
+        {%- when 'variant_picker' -%}
+          {%- unless product.variants.size == 0 -%}
+              {% render 'variant-picker', product: product, current_variant: current_variant, section:section %}
+          {%- endunless -%}  
+
+        {%- when 'product_features_heading' -%}
+        {% if block.settings.product_features_heading != blank %}
+         <div class="product-overview-container__feature-heading product-overview-container_row_medium-font">
+            <h2 class="product-overview-container__feature-heading__text product-overview-container_row_medium-font">
+             {{ block.settings.product_features_heading }}
+            </h2>
+          </div>
+        {% endif %}
+        
+        {%- when 'product_feature' -%}
+         <div class="product-overview-container__feature-blocks-container product-overview-container_fex product-overview-container_row">
+            {% assign svg_file = block.settings.svg_file %}  
+              {% if svg_file != blank %}
+               <div class="product-overview-container__feature-blocks-container__svg">
+                <img src="{{ svg_file | image_url }}" alt="product_feature_icon" width="21px;" height="21px;">
+               </div>
+               {% else %}
+                {% assign svg_code = block.settings.svg_code %}
+                {% if svg_code != blank %}
+                <div class="product-overview-container__feature-blocks-container__svg">
+                  {{ svg_code }}
+                </div>
+                {% endif %}
+           {% endif %}
+           <div class="product-overview-container__product-feature-text-container product-overview-container_fex">
+           <h3 class="product-overview-container__product-feature-heading">{{ block.settings.feature_information_title }}</h3>
+           <p class="product-overview-container__product-feature-description">{{ block.settings.feature_information }}</p>
+          </div>
+         </div>
+        
+        {% when 'product_pictograms' %}
+        {% if product.metafields.custom.product_pictograms %}
+          <div class="product-overview-container__product-pictograms product-overview-container_fex product-overview-container_row">
+            {% for pictogram in product.metafields.custom.product_pictograms.value %}
+              <div class="product-overview-container__pictogram-image">
+                <img src="{{ pictogram | image_url }}" alt="product_feature_icon" width="100%" height="100%">
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+        
+       {%- when 'buying_options' -%}
+        {% render 'add-to-cart-form',
+          currentlyAvailableForUser:currentlyAvailableVariantQuantityForUser,
+          product:product,
+          section:section,
+          current_variant:current_variant,
+          currentlyInCart:currentVariantInCart,
+          availableLimit:initializedVariantsQuantityLimit,
+          variantsOnStock: variant_stock_information
+        %}
+
+      {% endcase %}
+    {% endfor %}
+  </div>
+</div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Overview Section",
+  "tag": "section",
+  "class": "section",
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "title",
+      "name": "Product title",
+      "limit": 1
+    },
+    {
+      "type": "description",
+      "name": "Product description",
+      "limit": 1
+    },
+    {
+      "type": "product_features_heading",
+      "name": "product_features_heading",
+      "settings": [
+      {
+         "type": "text",
+         "id": "product_features_heading",
+         "label": "Add text"
+      }
+     ]
+    },
+    {
+      "type": "product_feature",
+      "name": "product_feature",
+      "settings": [
+       {
+        "type": "image_picker",
+        "id": "svg_file",
+        "label": "Upload SVG File"
+       },
+       {
+        "type": "textarea",
+        "id": "svg_code",
+        "label": "SVG Code"
+       },
+       {
+        "type": "text",
+        "id": "feature_information_title",
+        "label": "Add Feature Information Title"
+       },
+       {
+        "type": "text",
+        "id": "feature_information",
+        "label": "Add Feature Information"
+       }
+      ]
+     },
+    {
+      "type": "product_pictograms",
+      "name": "Product pictograms"
+    },
+    {
+      "type": "buying_options",
+      "name": "Buying options",
+      "limit": 1
+    },
+     {
+      "type": "variant_picker",
+      "name": "Variant picker",
+      "limit": 1
+    }
+  ],
+  "settings": [
+    {
+       "type": "product",
+       "id": "product_reference",
+       "label": "Choose product"
+    },
+    {
+       "type": "checkbox",
+       "id": "show_media",
+       "label": "Show product images"
+    },
+    {
+       "type": "checkbox",
+       "id": "allow_modal",
+       "label": "Allow opening modal with product image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Overview Section",
+      "blocks":[
+        {
+          "type": "title"
+        },
+        {
+          "type": "description"
+        },
+        {
+          "type": "variant_picker"
+        },
+        {
+          "type": "product_features_heading"
+        },
+        {
+          "type": "product_feature"
+        },
+        {
+          "type": "product_feature"
+        },
+        {
+          "type": "buying_options"
+        },
+        {
+          "type":"product_pictograms"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

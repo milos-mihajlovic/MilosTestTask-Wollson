@@ -1,0 +1,52 @@
+<script src="{{ 'add-to-cart-form.js' | asset_url }}" defer="defer"></script>
+{{ 'add-to-cart-form.css' | asset_url | stylesheet_tag }}
+
+<cart-form class="cart-form cart-form__flex">
+  <div id="quantity-picker-container-{{ section.id }}" class="cart-form__quantity-container cart-form__flex u-center-vert">
+   <p id="stock-limit-text-{{ section.id }}" class="cart-form__stock-limit-paragraph u-hidden">{{ settings.stock_limit_message }}
+   </p> 
+   <quantity-selector class="quantity cart-form__quantity-selector">
+    <button class="quantity__button no-js-hidden cart-form__quantity__button" name="minus" type="button">
+      {% render 'icon-minus' %}
+    </button>
+    <input class="quantity__input"
+      type="number"
+      name="add"
+      id="Quantity-{{ section.id }}"
+      min="0"
+      value="{% if currentlyAvailableForUser != 0 %}1{% else %}0{% endif %}"
+      data-variant-id="{{ current_variant.id }}"
+      data-number-cart="{{ currentlyInCart }}"
+      data-number="{{ availableLimit }}"
+      data-variant-price="{{ current_variant.price }}"
+      data-variant-compare-price="{{ current_variant.compare_at_price }}"
+      data-variants-stock='[{{ variantsOnStock }}]'
+      {% unless current_variant.available %}disabled{% endunless %}
+     >
+    <button class="quantity__button no-js-hidden cart-form__quantity__button" name="plus" type="button">
+      {% render 'icon-plus' %}
+    </button>
+   </quantity-selector>
+ </div>
+ <div class="cart-form__cart-action-container">
+  <div class="cart-form__free-shipping-msg">
+   {% render 'free-shipping-message' %}
+  </div>
+
+  <button 
+    class="cart-form__add-to-cart-button cart-form__flex"
+    data-available-text="{{ 'products.product.add_to_cart' | t }}" 
+    data-sold-out-text="{{ 'products.product.sold_out' | t }}" 
+    type="button" id="addToCartButton" 
+  {% if currentlyAvailableForUser == 0 %}disabled{% endif %}>
+  {%- if currentlyAvailableForUser != 0 -%}
+   {{ 'products.product.add_to_cart' | t }} - {{ current_variant.price | money }} {% if current_variant.compare_at_price %}<span class="cart-form__add-to-cart-button__discount-price-span"> {{ current_variant.compare_at_price | money }}</span>{% endif %}
+  {%- else -%}
+   {{ 'products.product.sold_out' | t }}
+  {%- endif -%}
+  </button>
+  <div>
+    <p class="cart-form__installments cart-form__flex">{{ settings.shop_pay_installments_message }} <span class="cart-form_installments_logo cart-form__flex">{% render 'shop-pay-icon' %}</span></p>
+  </div>
+  </div>
+</cart-form>

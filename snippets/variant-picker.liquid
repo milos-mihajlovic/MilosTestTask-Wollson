@@ -1,0 +1,25 @@
+{{ 'variant-picker.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'variant-picker.js' | asset_url }}" defer="defer"></script>
+
+<variant-picker class="variant-picker">
+     {% for variant in product.variants %}
+     {% assign imgUrl = variant.featured_image %}
+     <div class="variant-picker__container {% if variant.id == current_variant.id %}variant-picker__chosen{% endif %}">
+       <input
+        class="variant-picker__variant-input"
+        data-variant-src="{{ imgUrl | image_url }}" 
+        data-variant-alt="{{ imgUrl.alt }}" 
+        data-current-variant-id="{{ current_variant.id }}"
+        type="radio" 
+        id="{{ variant.id }}"
+        name="{{ variant.title }}" 
+        value="{{ variant.id }}"
+        {% if variant.id == current_variant.id %}checked{% endif %}>
+       <label
+        class="variant-picker__variant-label"
+        style="background-image: url('{{ imgUrl | image_url }}');"
+        for="{{ variant.id }}">
+       </label>
+     </div>
+  {% endfor %}
+</variant-picker>

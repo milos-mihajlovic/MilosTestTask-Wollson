@@ -1,0 +1,117 @@
+.section-container{
+ background-color: #FCF4EE;
+ display: flex; 
+ justify-content: center;
+}
+.product-overview-container{
+  max-width:1440px;
+  font-family: "Poppins", sans-serif; 
+  color: #61402E; 
+  min-height: 705px; 
+  padding:80px 150px;
+}
+.product-overview-container__blocks-container{
+  max-width: 530px;
+}
+.product-overview-container__product-pictograms{
+  justify-content: space-between;
+  margin-top: 32px;
+}
+.ratings-starts{
+  font-size:14px;
+  line-height: 18.2px;
+}
+.product-overview-container__title-product{
+  margin: 4px 0 8px 0;
+}
+.product-overview-container__title-product__title{
+  font-size: 32px; 
+  line-height: 41.6px;
+  margin:0;
+  }
+.product-overview-container__description-product{
+  margin-bottom: 16px;
+}
+.product-overview-container__description-product__paragraph{
+  font-weight:400;
+  font-size: 16px; 
+  line-height: 24px; 
+  margin: 0;
+}
+.product-overview-container__feature-heading{
+  margin: 0 0 8px 0;
+}
+.product-overview-container__feature-heading__text{
+  margin:0; 
+  font-size: 16px; 
+  line-height:20.8px;
+}
+.product-overview-container__feature-blocks-container{
+  margin-bottom: 8px;
+}
+.product-overview-container__feature-blocks-container__svg{
+  padding-top: 2px;
+}
+.product-overview-container__product-feature-text-container{
+  flex-direction: column; 
+  margin-left: 12px;
+}
+.product-overview-container__product-feature-heading{
+  margin:0; 
+  text-transform: uppercase; 
+  font-size:16px; 
+  line-height: 24px;
+}
+.product-overview-container__product-feature-description{
+  font-weight:400;
+  font-size:14px;
+  line-height:21px;
+  margin:0;
+}
+.product-overview-container__pictogram-image{
+  max-width:96px;
+  max-height:97px;
+}
+.product-overview-container_fex{
+  display:flex;
+}
+.product-overview-container_row{
+  display:row;
+}
+.product-overview-container_row_regular-font{
+  font-weight:400;
+}
+.product-overview-container_row_medium-font{
+  font-weight:500;
+}
+
+@media (max-width: 768px) {
+.product-overview-container{
+  flex-direction: column; 
+  max-width: 100%; 
+  padding: 48px 20px 48px 20px;
+  gap: 32px; 
+}
+.product-overview-container__blocks-container{
+  width: 100%;
+  max-width: 100%;
+}
+.product-overview-container__product-pictograms{
+  max-width: 100%;
+  margin-top: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+ .product-overview-container__title-product{
+  margin: 12px 0 12px 0;
+}
+.product-overview-container__title-product__title{
+  font-size: 28px; 
+  line-height: 36.4px; 
+  margin:0;
+}
+ .product-overview-container__description-product__paragraph{
+  line-height: 22.4px; 
+}
+}

@@ -1,0 +1,9 @@
+<script src="{{ 'feature-image-modal.js' | asset_url }}" defer="defer"></script>
+{{ 'feature-image-modal.css' | asset_url | stylesheet_tag }}
+
+<image-modal>
+  <div class="modal u-hidden overflow-auto">
+   <span class="modal__close">&times;</span>
+   <img class="modal__content">
+  </div>
+</image-modal>
