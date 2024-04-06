@@ -1,0 +1,117 @@
+{% stylesheet %}
+  .custom-header{
+   background: {{ section.settings.color }}
+  }
+{% endstylesheet %}
+
+<p>{{ 'text' | t }}</p>
+
+{% for block in section.blocks %}
+  {% if block.type == 'paragraph' %}
+    <p>{{ block.settings.text }}</p>
+  {% elsif block.type == '@app' %}
+    {% render block %}
+  {% endif %}
+{% endfor %}
+<h1>{{ section.settings.text }}</h1>
+{% for block in section.blocks %}
+  {% if block.type == 'social' %}
+    <a href="{{ block.settings.url }}">{{ block.settings.text }}</a>
+  {% endif %}
+{% endfor %}
+{% schema %}
+{
+  "name": "custom-header",
+  "class": "custom-header",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "color",
+      "id": "color",
+      "label": "Color"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "name": "social-link",
+      "type": "social",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL"
+        }
+      ]
+    },
+    {
+      "name": "paragraph",
+      "type": "paragraph",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "locales": {
+    "en": {
+      "text": "HELLO"
+    },
+    "es": {
+      "text": "HOLLA"
+    }
+  },
+  "disabled_on": {
+    "templates": ["cart"]
+  },
+  "presets": [
+    {
+      "name": "custom-header",
+      "settings": {
+        "text": "Default text"
+      },
+      "blocks": [
+        {
+          "type": "paragraph"
+        },
+        {
+          "type": "social",
+          "settings": {
+            "text": "Facebook",
+            "url": "https://www.facebook.com"
+          }
+        },
+        {
+          "type": "social",
+          "settings": {
+            "text": "Twitter",
+            "url": "https://www.twitter.com"
+          }
+        }
+      ]
+    },
+    {
+      "name": "red custom-header",
+      "settings": {
+        "text": "Red text"
+      }
+    }
+  ]
+}
+{% endschema %}
