@@ -77,41 +77,15 @@
       "text": "HOLLA"
     }
   },
-  "disabled_on": {
-    "templates": ["cart"]
-  },
-  "presets": [
-    {
-      "name": "custom-header",
-      "settings": {
-        "text": "Default text"
-      },
-      "blocks": [
-        {
-          "type": "paragraph"
-        },
-        {
-          "type": "social",
-          "settings": {
-            "text": "Facebook",
-            "url": "https://www.facebook.com"
-          }
-        },
-        {
-          "type": "social",
-          "settings": {
-            "text": "Twitter",
-            "url": "https://www.twitter.com"
-          }
-        }
-      ]
-    },
-    {
-      "name": "red custom-header",
-      "settings": {
-        "text": "Red text"
-      }
-    }
-  ]
+  "enabled_on": {
+    "groups": ["custom.section"]
+  }
 }
 {% endschema %}
+
+{% comment %}
+  zakomentarisano jer je sekcija renderovana kao section group "presets": [ { "name": "custom-header",
+  "settings": { "text": "Default text" }, "blocks": [ { "type": "paragraph" }, { "type": "social", "settings": { "text":
+  "Facebook", "url": "https://www.facebook.com" } }, { "type": "social", "settings": { "text": "Twitter", "url":
+  "https://www.twitter.com" } } ] }, { "name": "red custom-header", "settings": { "text": "Red text" } } ]
+{% endcomment %}
