@@ -1,13 +1,17 @@
 {
-    "name":"Special section",
-    "type":"custom.section",
-    "sections":{
-        "main":{
-            "type":"header-custom-section",
-            "settings":{
-                "text":"HARD RENDERED"
-            }
-        }
-    },
-    "order":["main"]
-} 
+  "name": "Special section",
+  "type": "custom.section",
+  "sections": {
+    "main": {
+      "type": "header-custom-section",
+      "disabled": true,
+      "settings": {
+        "text": "HARD RENDERED",
+        "color": ""
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
