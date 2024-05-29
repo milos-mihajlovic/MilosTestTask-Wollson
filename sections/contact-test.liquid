@@ -11,7 +11,7 @@
                                     <label for="email">email</label>
                                     <input type="text" name="contact[email]" placeholder="email" required>
                                 {% comment %} TODO BE: To show the error message, add class *** is-visible *** {% endcomment %}
-                                {% if form.errors contains 'email' %}
+                                {% if form.errors.messages contains 'email' %}
                                     <span class="error-message">This field is required!</span>
                                 {% endif %}
                             </div>
