@@ -44,6 +44,11 @@
       "settings": {
       }
     },
+    "contact_test_2_wtJ6rf": {
+      "type": "contact-test-2",
+      "settings": {
+      }
+    },
     "product_overview_section_aQFy4R": {
       "type": "product-overview-section",
       "blocks": {
@@ -115,6 +120,7 @@
   "order": [
     "image_banner",
     "contact_test_3ThGD4",
+    "contact_test_2_wtJ6rf",
     "product_overview_section_aQFy4R"
   ]
 }
