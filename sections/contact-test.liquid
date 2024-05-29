@@ -1,6 +1,6 @@
 {% form 'contact' %}
 
-                        {{ form.errors }}
+                       
 
                             <div class="contact-us__bottom-form-wrap">
                                     <label for="name">name</label>
@@ -14,7 +14,9 @@
                                     <label for="email">email</label>
                                     <input type="text" name="contact[email]" placeholder="email" required>
                                 {% comment %} TODO BE: To show the error message, add class *** is-visible *** {% endcomment %}
+                                   {% if form.errors %}
                                     <span class="error-message">This field is required!</span>
+                                     {% endif %}
                             </div>
                             <div class="contact-us__bottom-form-wrap">
                                     <label for="phone">phone</label>
