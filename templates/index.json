@@ -1,1 +1,121 @@
-{"sections":{"image_banner":{"type":"image-banner","blocks":{"heading":{"type":"heading","settings":{"heading":"Browse our latest products","heading_size":"h0"}},"button":{"type":"buttons","settings":{"button_label_1":"Shop all","button_link_1":"shopify:\/\/collections\/all","button_style_secondary_1":true,"button_label_2":"","button_link_2":"","button_style_secondary_2":false}}},"block_order":["heading","button"],"settings":{"image_overlay_opacity":40,"image_height":"large","desktop_content_position":"bottom-center","show_text_box":false,"desktop_content_alignment":"center","color_scheme":"scheme-3","image_behavior":"none","mobile_content_alignment":"center","stack_images_on_mobile":false,"show_text_below":false}}},"order":["image_banner"]}
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin theme editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
+{
+    "sections": {
+        "image_banner": {
+            "type": "image-banner",
+            "blocks": {
+                "heading": {
+                    "type": "heading",
+                    "settings": {
+                        "heading": "Browse our latest products",
+                        "heading_size": "h0"
+                    }
+                },
+                "button": {
+                    "type": "buttons",
+                    "settings": {
+                        "button_label_1": "Shop all",
+                        "button_link_1": "shopify:\/\/collections\/all",
+                        "button_style_secondary_1": true,
+                        "button_label_2": "",
+                        "button_link_2": "",
+                        "button_style_secondary_2": false
+                    }
+                }
+            },
+            "block_order": [
+                "heading",
+                "button"
+            ],
+            "settings": {
+                "image_overlay_opacity": 40,
+                "image_height": "large",
+                "desktop_content_position": "bottom-center",
+                "show_text_box": false,
+                "desktop_content_alignment": "center",
+                "color_scheme": "scheme-3",
+                "image_behavior": "none",
+                "mobile_content_alignment": "center",
+                "stack_images_on_mobile": false,
+                "show_text_below": false
+            }
+        },
+        "milos_marquee_CAkJDT": {
+            "type": "milos-marquee",
+            "blocks": {
+                "usp_image_dcKJ6p": {
+                    "type": "usp_image",
+                    "settings": {
+                        "usp_image": "shopify:\/\/shop_images\/image_2.png",
+                        "image_width": 80,
+                        "image_height": 80
+                    }
+                },
+                "usp_text_dNhQkX": {
+                    "type": "usp_text",
+                    "settings": {
+                        "usp_text": "milos",
+                        "font_size": 18
+                    }
+                },
+                "usp_image_qLPeen": {
+                    "type": "usp_image",
+                    "settings": {
+                        "usp_image": "shopify:\/\/shop_images\/image_1_238b73f6-3776-456f-b56c-6c2d66482bcc.png",
+                        "image_width": 50,
+                        "image_height": 50
+                    }
+                },
+                "usp_text_DJwJ9V": {
+                    "type": "usp_text",
+                    "settings": {
+                        "usp_text": "losmi",
+                        "font_size": 18
+                    }
+                },
+                "usp_image_Lhc6Rg": {
+                    "type": "usp_image",
+                    "settings": {
+                        "usp_image": "shopify:\/\/shop_images\/image_1.png",
+                        "image_width": 120,
+                        "image_height": 120
+                    }
+                }
+            },
+            "block_order": [
+                "usp_image_dcKJ6p",
+                "usp_text_dNhQkX",
+                "usp_image_qLPeen",
+                "usp_text_DJwJ9V",
+                "usp_image_Lhc6Rg"
+            ],
+            "settings": {
+                "section_target": "",
+                "usp_direction": false,
+                "stop_animation": false,
+                "images_per_row": 5,
+                "images_per_row_m": 2,
+                "usps_gap_m": 20,
+                "usps_gap": 30,
+                "background_color": "#bdb8f4",
+                "text_color": "#000",
+                "mob_padding_top": 40,
+                "mob_padding_bottom": 40,
+                "desk_padding_top": 40,
+                "desk_padding_bottom": 40
+            }
+        }
+    },
+    "order": [
+        "image_banner",
+        "milos_marquee_CAkJDT"
+    ]
+}
