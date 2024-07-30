@@ -1,0 +1,29 @@
+wls-usp .wls-usp__carousel-list {
+    align-items: center;
+    display: flex;
+}
+
+wls-usp .wls-usp__carousel-list .wls-usp__image img {
+    height: auto;
+    width: 100%;
+    object-fit: contain;
+}
+wls-usp .wls-usp__carousel {
+    overflow: hidden;
+    width: 100%;
+}
+
+wls-usp .splide__track {
+    overflow: hidden;
+    width: 100%;
+}
+
+wls-usp .splide__list {
+    display: flex;
+    width: 100%;
+}
+
+wls-usp .splide__slide {
+    flex: 1 0 auto;
+    text-align: center;
+} 

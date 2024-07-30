@@ -1,0 +1,335 @@
+{{ 'milos-marquee.css' | asset_url | stylesheet_tag }}
+
+<script src="{{ 'bundle.js' | asset_url }}"></script>
+
+{% liquid
+    assign section_target = section.settings.section_target
+
+    assign usp_direction = section.settings.usp_direction
+    assign stop_animation = section.settings.stop_animation
+    assign images_per_row = section.settings.images_per_row
+    assign images_per_row_m = section.settings.images_per_row_m
+    assign padding_left_right = section.settings.padding_left_right
+    assign padding_left_right_m = section.settings.padding_left_right_m
+    assign gap_m = section.settings.usps_gap_m
+    assign gap = section.settings.usps_gap
+
+    assign usps = section.blocks
+
+    assign background_color = section.settings.background_color
+    assign text_color = section.settings.text_color
+    assign mob_padding_top = section.settings.mob_padding_top
+    assign mob_padding_bottom = section.settings.mob_padding_bottom
+    assign desk_padding_top = section.settings.desk_padding_top
+    assign desk_padding_bottom = section.settings.desk_padding_bottom
+
+%}
+
+{%- style -%}
+    .{{ section.id }} {
+        background-color: {{ background_color }};
+        padding-top: {{ mob_padding_top }}px;
+        padding-bottom: {{ mob_padding_bottom }}px;
+    }
+    .{{ section.id }} .wls-usp__block {
+        margin-right: {{ gap_m }}px;
+    }
+    .{{ section.id }} {
+        color: {{ text_color }};
+    }
+
+    {% if stop_animation %}
+        .{{ section.id }} .wls-usp__block {
+            margin-right: 0;
+        }
+        .{{ section.id }} .wls-usp__carousel.splide {
+            visibility: visible;
+        }
+        .{{ section.id }} wls-usp .wls-usp__carousel-list {
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: {{ gap_m }}px;
+        }
+        .{{ section.id }} wls-usp .wls-usp__carousel {
+           padding: 0 {{ padding_left_right_m }}px;
+        }
+        .{{ section.id }} .wls-usp__block {
+            width: calc((100% - ({{ images_per_row_m | minus: 1 }} * {{ gap_m }}px)) / {{ images_per_row_m }});
+        }
+    {% endif %}
+
+    @media screen and (min-width: 768px) {
+        .{{ section.id }} {
+            padding-top: {{ desk_padding_top }}px;
+            padding-bottom: {{ desk_padding_bottom }}px;
+        }
+        .{{ section.id }} .wls-usp__block {
+            margin-right: {{ gap }}px;
+        }
+        {% if stop_animation %}        
+            .{{ section.id }} wls-usp .wls-usp__carousel-list {
+                gap: {{ gap }}px;
+            }
+            .{{ section.id }} wls-usp .wls-usp__carousel {
+                padding: 0 {{ padding_left_right }}px;
+            }
+            .{{ section.id }} .wls-usp__block {
+                margin-right: 0;
+            }
+            .{{ section.id }} .wls-usp__block {
+                width: calc((100% - ({{ images_per_row | minus: 1 }} * {{ gap }}px)) / {{ images_per_row }});
+            }
+        {% endif %}
+    }
+{%- endstyle -%}
+
+<div class=" {{ section.id }}" id="{{ section_target }}">
+    <wls-usp>
+        {% if usps.size > 0 %}
+            <div class="wls-usp__carousel splide"
+                data-reverse='{{ usp_direction }}'
+                data-stop='{{ stop_animation }}'>
+                <div class="splide__track">
+                    <div class="splide__list wls-usp__carousel-list">
+                        {% liquid
+                            assign loop = 3
+                            if stop_animation                            
+                                assign loop = 1
+                            endif
+                        %}                      
+                        {% for i in (1..loop) %}
+                            {% for usp in usps %}
+                                {% case usp.type %}
+                                    {% when 'usp_image' %}
+                                        {% liquid
+                                            assign usp_image = usp.settings.usp_image
+                                            assign usp_image_height = usp.settings.image_height
+                                            assign usp_image_width = usp.settings.image_width
+                                        %}
+                                        {% style %}
+                                            .{{ usp.id }} {
+                                                height: {{ usp_image_height }}px;
+                                                width: {{ usp_image_width }}px;
+                                            }
+                                        {% endstyle %}
+                                        {% if usp_image != blank %}
+                                            <div class="{{ usp.id }} wls-usp__block wls-usp__image splide__slide">
+                                                {{ usp_image | image_url: width: 300 | image_tag }}
+                                            </div> 
+                                        {% endif %} 
+
+                                    {% when 'usp_text' %}
+                                        {% liquid
+                                            assign usp_text = usp.settings.usp_text
+                                            assign usp_text_font_size = usp.settings.font_size
+                                        %}
+                                        {% style %}
+                                            .{{ usp.id }} p {
+                                                font-size: {{ usp_text_font_size }}px;
+                                                text-align: center;
+                                            }
+                                        {% endstyle %}
+                                        {% if usp_text != blank %}
+                                            <div class="{{ usp.id }} wls-usp__block splide__slide">
+                                                <p>{{ usp_text }}</p>
+                                            </div> 
+                                        {% endif %} 
+                                {% endcase %}                          
+                            {% endfor %}
+                        {% endfor %}
+                        </div>
+                    </div>
+                </div>
+        {% endif %}
+    </wls-usp>
+</div>
+
+
+{% comment %} <script src="{{ 'milos-marquee.js' | asset_url }}" defer="defer"></script> {% endcomment %}
+
+
+{% schema %}
+{
+    "name": "Milos Marquee",
+    "class": "wls-section",
+    "tag": "section",
+    "presets": [
+        {
+            "name": "Milos Marquee"
+        }
+    ],
+    "settings": [
+        {
+            "type": "header",
+            "content": "Section Global"
+        },
+        {
+            "type": "text",
+            "id": "section_target",
+            "label": "Section Target"
+        },
+        {
+            "type": "checkbox",
+            "id": "usp_direction",
+            "label": "Reverse Animation"            
+        },
+        {
+            "type": "checkbox",
+            "id": "stop_animation",
+            "label": "Stop Animation"            
+        },
+        {
+            "type": "header",
+            "content": "STOPPED ANIATION SETTINGS",
+            "info": "Images per row, left and right padding -> will be used only if the animation is stopped by checkbox above"
+        },
+        {
+            "type": "range",
+            "id": "images_per_row",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "label": "Images per row (Desktop)",
+            "default": 5
+        },
+        {
+            "type": "range",
+            "id": "images_per_row_m",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "label": "Images per row (Mobile)",
+            "default": 2
+        },
+        {
+            "type": "number",
+            "id": "padding_left_right",
+            "label": "Left & Right paddings"
+        },
+        {
+            "type": "number",
+            "id": "padding_left_right_m",
+            "label": "Left & Right paddings (Mobile)"
+        },
+        {
+            "type": "range",
+            "id": "usps_gap_m",
+            "min": 0,
+            "max": 200,
+            "step": 5,
+            "unit": "px",
+            "label": "Gaps - Small screens",
+            "default": 20
+        },
+        {
+            "type": "range",
+            "id": "usps_gap",
+            "min": 0,
+            "max": 200,
+            "step": 5,
+            "unit": "px",
+            "label": "Gaps - Big screens",
+            "default": 30
+        },
+
+        {
+            "type": "header",
+            "content": "Section Style"
+        },
+        {
+            "type": "color",
+            "id": "background_color",
+            "label": "Section background color",
+            "default": "#fff"
+        },
+        {
+            "type": "color",
+            "id": "text_color",
+            "label": "Section text color",
+            "default": "#000"
+        },
+        {
+            "type": "range",
+            "id": "mob_padding_top",
+            "min": 0,
+            "max": 200,
+            "step": 5,
+            "unit": "px",
+            "label": "Section padding top - small screens",
+            "default": 40
+        },
+        {
+            "type": "range",
+            "id": "mob_padding_bottom",
+            "min": 0,
+            "max": 200,
+            "step": 5,
+            "unit": "px",
+            "label": "Section padding bottom - small screens",
+            "default": 40
+        },
+        {
+            "type": "range",
+            "id": "desk_padding_top",
+            "min": 0,
+            "max": 200,
+            "step": 5,
+            "unit": "px",
+            "label": "Section padding top - big screens",
+            "default": 40
+        },
+        {
+            "type": "range",
+            "id": "desk_padding_bottom",
+            "min": 0,
+            "max": 200,
+            "step": 5,
+            "unit": "px",
+            "label": "Section padding bottom - big screens",
+            "default": 40
+        }
+    ],
+    "blocks": [
+        {
+            "type": "usp_image",
+            "name": "USP Image",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "usp_image",
+                    "label": "USP Image"
+                },
+                {
+                    "type": "number",
+                    "id": "image_width",
+                    "label": "Image Width",
+                    "default": 100
+                },
+                {
+                    "type": "number",
+                    "id": "image_height",
+                    "label": "Image Height",
+                    "default": 100
+                }
+            ]
+        },
+        {
+            "type": "usp_text",
+            "name": "USP Text",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "usp_text",
+                    "label": "USP Text"
+                },
+                {
+                    "type": "number",
+                    "id": "font_size",
+                    "label": "Font size",
+                    "default": 18
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}
