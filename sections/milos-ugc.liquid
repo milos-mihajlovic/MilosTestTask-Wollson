@@ -1,0 +1,371 @@
+{{ 'milos-ugc.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+    assign section_target = section.settings.section_target
+
+    assign headline = section.settings.headline
+    assign headline_element = section.settings.headline_element
+    assign sub_headline = section.settings.sub_headline
+    assign sub_headline_element = section.settings.sub_headline_element
+    assign pre_headline = section.settings.pre_headline
+    assign pre_headline_element = section.settings.pre_headline_element
+    assign copy = section.settings.copy    
+
+    assign columns_desktop = section.settings.columns_desktop
+    assign videos_gap = section.settings.videos_gap
+    assign videos_gap_m = section.settings.videos_gap_m
+    assign play_btn = section.settings.play_btn
+
+    assign cta_text = section.settings.cta_text
+    assign cta_url = section.settings.cta_url
+    assign cta_style = section.settings.cta_style
+
+    assign background_color = section.settings.background_color
+    assign font_color = section.settings.font_color
+    assign mob_padding_top = section.settings.mob_padding_top
+    assign mob_padding_bottom = section.settings.mob_padding_bottom
+    assign desk_padding_top = section.settings.desk_padding_top
+    assign desk_padding_bottom = section.settings.desk_padding_bottom
+
+    assign videos = section.blocks | where: 'type', 'video'
+
+    assign slider_desktop = false
+    if videos.size > columns_desktop
+        assign slider_desktop = true
+    endif
+%}
+
+{%- style -%}
+    .{{ section.id }} {
+      background-color: {{ background_color }};
+      padding-top: {{ mob_padding_top }}px;
+      padding-bottom: {{ mob_padding_bottom }}px;
+      color: {{ font_color }};
+    }
+    .{{ section.id }} .splide__track {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .{{ section.id }} .splide__slide {
+        flex: 1 0 auto;
+        text-align: center;
+    }
+
+    @media screen and (min-width: 768px) {
+      .{{ section.id }} {
+        padding-top: {{ desk_padding_top }}px;
+        padding-bottom: {{ desk_padding_bottom }}px;
+      }
+
+    {% unless slider_desktop %}
+        .{{ section.id }} .wls-ugc__carousel.splide {
+            visibility: visible;
+        }
+        .{{ section.id }} .wls-ugc__container .wls-ugc__video {
+            width: calc((100% - ({{ columns_desktop | minus: 1 }} * {{ videos_gap }}px)) / {{ columns_desktop }});
+        }
+        .{{ section.id }} .wls-ugc__container {
+            gap: {{ videos_gap }}px;
+        }
+        .{{ section.id }} wls-ugc .wls-ugc .wls-ugc__container {
+            justify-content: center;
+        }
+
+        .{{ section.id }} .splide.is-initialized:not(.is-active) .splide__list {
+            display: flex;
+        }
+        .{{ section.id }} .wls-ugc__carousel {
+            display: flex;
+            justify-content: center;
+        }
+
+    {% else %}
+        .{{ section.id }} wls-ugc .wls-ugc .wls-ugc__container {
+            flex-wrap: nowrap;
+        }
+    {% endunless %}
+    }
+{%- endstyle -%}
+
+<div class=" {{ section.id }}" id="{{ section_target }}">
+    <wls-ugc>
+        <div class="wls-ugc wrapper">
+            {% if headline != blank or pre_headline != blank or sub_headline != blank or copy != blank %}
+                <div class="wls-ugc__top">
+                    <div class="wls-ugc__headlines">
+                        {% if pre_headline != blank %}
+                            <h{{ pre_headline_element }} class="wls-ugc__pre-headline">
+                                {{ pre_headline }}
+                            </h{{ pre_headline_element }}>
+                        {% endif %}
+                        {% if headline != blank %}
+                            <h{{ headline_element }} class="wls-ugc__headline">
+                                {{ headline }}
+                            </h{{ headline_element }}>
+                        {% endif %}            
+                        {% if sub_headline != blank %}
+                            <h{{ sub_headline_element }} class="wls-ugc__sub-headline">
+                                {{ sub_headline }}
+                            </h{{ sub_headline_element }}>
+                        {% endif %}  
+                        {% if copy != blank %}
+                            <p class="wls-ugc__copy">
+                                {{ copy }}
+                            </p>
+                        {% endif %}   
+                    </div>
+                </div>     
+            {% endif %} 
+
+            {% if videos.size > 0 %}
+                <div class="wls-ugc__carousel splide"
+                    data-desktop="{{ slider_desktop }}"
+                    data-slides-desktop="{{ columns_desktop }}"
+                    data-gap="{{ videos_gap }}"
+                    data-gapm="{{ videos_gap_m }}">
+                    <div class="splide__track">
+                    <div class="wls-ugc__container splide__list">
+                        {% for block in videos %}
+                            {% liquid
+                                assign video = block.settings.video
+                                assign source       = video.sources | where: "format", "mp4" | first
+                            %}                            
+
+                            <div class="wls-ugc__video splide__slide" wls-video-playing='false' controls="false">
+                                <video
+                                    playsinline
+                                >
+                                    <source src="{{ source.url }}" type="{{ source.mime_type }}">
+                                </video>
+
+                                {% if play_btn != blank %}
+                                    <div class="wls-ugc__play-btn" wls-video-play-btn>
+                                        {{ play_btn | image_url: width: 100 | image_tag }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                        {% endfor %}
+                    </div>
+                    </div>
+                </div>
+            {% endif %} 
+
+            {% if cta_text != blank and cta_url != blank %}
+                <div class="wls-ugc_cta_button-container">
+                    <a class="c-btn wls-ugc__cta-button" href="{{ cta_url }}">
+                        {{ cta_text }}
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </wls-ugc>
+</div>
+
+
+<script src="{{ 'milos-ugc.js' | asset_url }}" defer="defer"></script>
+
+
+{% schema %}
+  {
+    "name": "Milos UGC",
+    "class": "wls-section",
+    "tag": "section",
+    "presets": [
+      {
+        "name": "Milos UGC"
+      }
+    ],
+    "settings": [
+    {
+        "type": "header",
+        "content": "Section Global"
+    },
+    {
+        "type": "text",
+        "id": "section_target",
+        "label": "Section Target"
+    },
+    {
+        "type": "text",
+        "id": "pre_headline",
+        "label": "Pre-Headline"
+    },
+    {
+        "type": "select",
+        "id": "pre_headline_element",
+        "label": "Pre-Headline html element",
+        "default": "3",
+        "options": [
+            { "label": "H1", "value": "1" },
+            { "label": "H2", "value": "2" },
+            { "label": "H3", "value": "3" },
+            { "label": "H4", "value": "4" },
+            { "label": "H5", "value": "5" },
+            { "label": "H6", "value": "6" }
+        ]
+    },
+    {
+        "type": "text",
+        "id": "headline",
+        "label": "Headline"
+    },
+    {
+        "type": "select",
+        "id": "headline_element",
+        "label": "Headline html element",
+        "default": "2",
+        "options": [
+            { "label": "H1", "value": "1" },
+            { "label": "H2", "value": "2" },
+            { "label": "H3", "value": "3" },
+            { "label": "H4", "value": "4" },
+            { "label": "H5", "value": "5" },
+            { "label": "H6", "value": "6" }
+        ]
+    },
+    {
+        "type": "text",
+        "id": "sub_headline",
+        "label": "Sub-Headline"
+    },
+    {
+        "type": "select",
+        "id": "sub_headline_element",
+        "label": "Sub-Headline html element",
+        "default": "4",
+        "options": [
+            { "label": "H1", "value": "1" },
+            { "label": "H2", "value": "2" },
+            { "label": "H3", "value": "3" },
+            { "label": "H4", "value": "4" },
+            { "label": "H5", "value": "5" },
+            { "label": "H6", "value": "6" }
+        ]
+    },
+    {
+        "type": "text",
+        "id":"copy",
+        "label": "Copy Text"
+    },
+    {
+        "type": "image_picker",
+        "id": "play_btn",
+        "label": "Videos Play Button"
+    },
+    {
+        "type": "range",
+        "id": "videos_gap",
+        "min": 0,
+        "max": 200,
+        "step": 5,
+        "unit": "px",
+        "label": "Videos gap (Desktop)",
+        "default": 40
+    },
+    {
+        "type": "range",
+        "id": "videos_gap_m",
+        "min": 0,
+        "max": 200,
+        "step": 5,
+        "unit": "px",
+        "label": "Videos gap (Mobile)",
+        "default": 40
+    },
+    {
+        "type": "range",
+        "id": "columns_desktop",
+        "min": 2,
+        "max": 6,
+        "step": 1,
+        "label": "Numbers of columns (Desktop)",
+        "default": 4
+    },
+    {
+        "type": "header",
+        "content": "Button Settings"
+    },
+    {
+        "type": "text",
+        "id": "cta_text",
+        "label": "Button Text"
+    },
+    {
+        "type": "url",
+        "id": "cta_url",
+        "label": "Button ULR"
+    },
+    {
+        "type": "header",
+        "content": "Section Style"
+    },
+    {
+        "type": "color",
+        "id": "background_color",
+        "label": "Section background color",
+        "default": "#fff"
+    },
+    {
+        "type": "color",
+        "id": "font_color",
+        "label": "Font color",
+        "default": "#000"
+    },
+    {
+        "type": "range",
+        "id": "mob_padding_top",
+        "min": 0,
+        "max": 200,
+        "step": 5,
+        "unit": "px",
+        "label": "Section padding top - small screens",
+        "default": 80
+    },
+    { 
+        "type": "range",
+        "id": "mob_padding_bottom",
+        "min": 0,
+        "max": 200,
+        "step": 5,
+        "unit": "px",
+        "label": "Section padding bottom - small screens",
+        "default": 80
+    },
+    {
+        "type": "range",
+        "id": "desk_padding_top",
+        "min": 0,
+        "max": 200,
+        "step": 5,
+        "unit": "px",
+        "label": "Section padding top - big screens",
+        "default": 100
+    },    
+    {
+        "type": "range",
+        "id": "desk_padding_bottom",
+        "min": 0,
+        "max": 200,
+        "step": 5,
+        "unit": "px",
+        "label": "Section padding bottom - big screens",
+        "default": 100
+    }
+    ],
+    "blocks": [
+        {
+            "type": "video",
+            "name": "Video",
+            "settings": [
+                {
+                    "type": "video",
+                    "id": "video",
+                    "label": "Video"
+                }
+            ]
+        }
+    ]
+  }
+{% endschema %}

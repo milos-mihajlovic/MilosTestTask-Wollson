@@ -106,16 +106,75 @@
                 "usps_gap_m": 20,
                 "usps_gap": 30,
                 "background_color": "#bdb8f4",
-                "text_color": "#000",
+                "text_color": "#000000",
                 "mob_padding_top": 40,
                 "mob_padding_bottom": 40,
                 "desk_padding_top": 40,
                 "desk_padding_bottom": 40
             }
+        },
+        "milos_ugc_qDFpAz": {
+            "type": "milos-ugc",
+            "blocks": {
+                "video_E4r4Mz": {
+                    "type": "video",
+                    "settings": {
+                        "video": "shopify:\/\/files\/videos\/big_buck_bunny_720p_1mb.mp4"
+                    }
+                },
+                "video_NRh9FR": {
+                    "type": "video",
+                    "settings": {
+                        "video": "shopify:\/\/files\/videos\/big_buck_bunny_720p_1mb.mp4"
+                    }
+                },
+                "video_hnjLUr": {
+                    "type": "video",
+                    "settings": {
+                        "video": "shopify:\/\/files\/videos\/big_buck_bunny_720p_1mb.mp4"
+                    }
+                },
+                "video_HpNwz7": {
+                    "type": "video",
+                    "settings": {
+                        "video": "shopify:\/\/files\/videos\/big_buck_bunny_720p_1mb.mp4"
+                    }
+                }
+            },
+            "block_order": [
+                "video_E4r4Mz",
+                "video_NRh9FR",
+                "video_hnjLUr",
+                "video_HpNwz7"
+            ],
+            "settings": {
+                "section_target": "",
+                "pre_headline": "pre-headline",
+                "pre_headline_element": "3",
+                "headline": "Headline Goes Here",
+                "headline_element": "2",
+                "sub_headline": "sub-headline",
+                "sub_headline_element": "4",
+                "copy": "Khun Chamroen and his wife met at the farm they manage over 30 years ago, and continue to bring that love & care into their Nam Hom coconuts.",
+                "play_btn": "shopify:\/\/shop_images\/video-play-button-icon-for-graphic-design-logo-web-site-social-media-mobile-app-ui-illustration-png.webp",
+                "videos_gap": 40,
+                "videos_gap_m": 40,
+                "columns_desktop": 4,
+                "cta_text": "view all products",
+                "cta_url": "#",
+                "cta_style": "c-button__style-1",
+                "background_color": "#fff",
+                "font_color": "#000",
+                "mob_padding_top": 80,
+                "mob_padding_bottom": 80,
+                "desk_padding_top": 100,
+                "desk_padding_bottom": 100
+            }
         }
     },
     "order": [
         "image_banner",
-        "milos_marquee_CAkJDT"
+        "milos_marquee_CAkJDT",
+        "milos_ugc_qDFpAz"
     ]
 }

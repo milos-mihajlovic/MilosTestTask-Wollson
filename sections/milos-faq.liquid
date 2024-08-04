@@ -1,0 +1,347 @@
+{{ 'milos-faq.css' | asset_url | stylesheet_tag }}
+
+
+{% liquid
+comment
+    GLOBAL
+endcomment
+    assign section_target = section.settings.section_target
+    assign image_mobile = section.settings.image_mobile
+    assign image_desktop = section.settings.image_desktop
+    assign image_position = section.settings.image_position
+    assign headline = section.settings.headline
+    assign headline_element = section.settings.headline_element
+    assign sub_headline = section.settings.sub_headline
+    assign sub_headline_element = section.settings.sub_headline_element
+    assign pre_headline = section.settings.pre_headline
+    assign pre_headline_element = section.settings.pre_headline_element
+
+    assign question_and_answers = section.blocks | where: 'type', 'question_and_answer'
+
+    assign primary_button_new_tab = section.settings.primary_button_new_tab
+    assign primary_button_text = section.settings.primary_button_text
+    assign primary_button_url = section.settings.primary_button_url
+
+    assign secondary_button_text = section.settings.primary_button_text
+    assign secondary_button_new_tab = section.settings.secondary_button_new_tab
+    assign secondary_button_url = section.settings.secondary_button_url
+
+comment
+    STYLE
+endcomment
+    assign background_color = section.settings.background_color
+    assign mob_padding_top = section.settings.mob_padding_top
+    assign mob_padding_bottom = section.settings.mob_padding_bottom
+    assign desk_padding_top = section.settings.desk_padding_top
+    assign desk_padding_bottom = section.settings.desk_padding_bottom
+%}
+
+{%- style -%}
+    .{{ section.id }} {
+        background-color: {{ background_color }};
+        padding-top: {{ mob_padding_top }}px;
+        padding-bottom: {{ mob_padding_bottom }}px;
+    }
+
+    @media screen and (min-width: 768px) {
+        .{{ section.id }} {
+            padding-top: {{ desk_padding_top }}px;
+            padding-bottom: {{ desk_padding_bottom }}px;
+        }
+    }
+{%- endstyle -%}
+
+<div class=" {{ section.id }}" id="{{ section_target }}">
+    <faq-section  class="wrapper wls-faq">
+        {% if headline != blank or pre_headline != blank or sub_headline != blank %}
+            <div class="wls-faq__top">
+                <div class="wls-faq__headlines">
+                    {% if pre_headline != blank %}
+                        <h{{ pre_headline_element }} class="wls-faq__pre-headline">
+                            {{ pre_headline }}
+                        </h{{ pre_headline_element }}>
+                    {% endif %}
+                    {% if headline != blank %}
+                        <h{{ headline_element }} class="wls-faq__headline">
+                            {{ headline }}
+                        </h{{ headline_element }}>
+                    {% endif %}
+                </div>
+                {% if sub_headline != blank %}
+                    <h{{ sub_headline_element }} class="wls-faq__sub-headline">
+                        {{ sub_headline }}
+                    </h{{ sub_headline_element }}>
+                {% endif %}   
+            </div>     
+        {% endif %}    
+        {% if image_mobile != blank or image_desktop != blank or question_and_answers.size > 0  %}
+            <div class="wls-faq__bottom {{ image_position }}">                    
+                {% if image_desktop %}
+                    <div class="wls-faq__image-container">
+                        <picture>
+                            {% if image_mobile %}
+                                <source
+                                    media="(max-width: 768px)"
+                                    srcset="{{ image_mobile | image_url: width: 500 }} 500w"
+                                />
+                            {% endif %}
+                            {{ image_desktop | image_url: width: 1000 | image_tag }}
+                        </picture>
+                    </div>
+                {% endif %}
+                {% if question_and_answers.size > 0 or
+                        primary_button_text != blank or
+                        secondary_button_text != blank
+                %}
+                    <div class="wls-faq__accordions-buttons">
+                        {% if question_and_answers.size > 0 %}
+                            <div class="wls-faq__question_and_answers">
+                                {% for block in question_and_answers %}
+                                    <div class="wls-faq__accordion">
+                                        {% if block.settings.question != blank %}
+                                            <span class="wls-faq__question js-box-shown js-box-first-open">
+                                                {{ block.settings.question }}
+
+                                                {% render 'snippet-icons', name: 'accordion-plus', classes: 'plus' %}
+                                                {% render 'snippet-icons', name: 'accordion-minus', classes: 'minus' %}                                                                                                                     
+                                            </span>
+                                        {% endif %}
+                                        {% if block.settings.answer != blank %}
+                                            <div class="wls-faq__answer js-box-hidden">
+                                                <div class="entry-content">
+                                                    {{ block.settings.answer }}
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}                                
+                            </div>
+                        {% endif %}     
+                        {% if primary_button_text != blank and primary_button_url != blank %}
+                            <a class="wls-faq__cta-button" href="{{ primary_button_url }}" {% if primary_button_new_tab %}target="_blank"{% endif %}>
+                                {{ primary_button_text }}
+                            </a>
+                        {% endif %}
+                        {% if secondary_button_text != blank and secondary_button_url != blank %}
+                            <a class="wls-faq__cta-button" href="{{ secondary_button_url }}" {% if secondary_button_new_tab %}target="_blank"{% endif %}>
+                                {{ secondary_button_text }}
+                            </a>
+                        {% endif %}
+                    </div> 
+                {% endif %}              
+            </div>
+        {% endif %}
+    </faq-section >
+</div>
+
+<script src="{{ 'milos-faq.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+    "name": "Milos FAQ",
+    "class": "wls-section",
+    "tag": "section",
+    "presets": [
+        {
+            "name": "Milos FAQ"
+        }
+    ],
+    "settings": [
+        {
+            "type": "header",
+            "content": "Section Global"
+        },
+        {
+            "type": "text",
+            "id": "section_target",
+            "label": "Section Target"
+        },
+        {
+            "type": "image_picker",
+            "id": "image_mobile",
+            "label": "Mobile Image"
+        },
+        {
+            "type": "image_picker",
+            "id": "image_desktop", 
+            "label": "Desktop Image"
+        },
+        {
+            "type": "text",
+            "id": "pre_headline",
+            "label": "Pre-Headline"
+        },
+        {
+            "type": "select",
+            "id": "pre_headline_element",
+            "label": "Pre-Headline html element",
+            "default": "3",
+            "options": [
+                { "label": "H1", "value": "1" },
+                { "label": "H2", "value": "2" },
+                { "label": "H3", "value": "3" },
+                { "label": "H4", "value": "4" },
+                { "label": "H5", "value": "5" },
+                { "label": "H6", "value": "6" }
+            ]
+        },
+        {
+            "type": "text",
+            "id": "headline",
+            "label": "Headline"
+        },
+        {
+            "type": "select",
+            "id": "headline_element",
+            "label": "Headline html element",
+            "default": "2",
+            "options": [
+                { "label": "H1", "value": "1" },
+                { "label": "H2", "value": "2" },
+                { "label": "H3", "value": "3" },
+                { "label": "H4", "value": "4" },
+                { "label": "H5", "value": "5" },
+                { "label": "H6", "value": "6" }
+            ]
+        },
+        {
+            "type": "text",
+            "id": "sub_headline",
+            "label": "Sub-Headline"
+        },
+        {
+            "type": "select",
+            "id": "sub_headline_element",
+            "label": "Sub-Headline html element",
+            "default": "4",
+            "options": [
+                { "label": "H1", "value": "1" },
+                { "label": "H2", "value": "2" },
+                { "label": "H3", "value": "3" },
+                { "label": "H4", "value": "4" },
+                { "label": "H5", "value": "5" },
+                { "label": "H6", "value": "6" }
+            ]
+        },
+        {
+            "type": "text",
+            "id": "primary_button_text",
+            "label": "Primary Button Text"
+        },
+        {
+            "type": "url",
+            "id": "primary_button_url",
+            "label": "Primary Button ULR"
+        },
+        {
+            "type": "checkbox",
+            "id": "primary_button_new_tab",
+            "label": "Opens in  new tab",
+            "default": false
+        },
+        {
+            "type": "text",
+            "id": "secondary_button_text",
+            "label": "Secondary Button Text"
+        },
+        {
+            "type": "url",
+            "id": "secondary_button_url",
+            "label": "Secondary Button ULR"
+        },
+        {
+            "type": "checkbox",
+            "id": "secondary_button_new_tab",
+            "label": "Secondary in  new tab",
+            "default": false
+        },
+
+
+
+        {
+            "type": "header",
+            "content": "Section Style"
+        },
+        {
+            "type": "select",
+            "id": "image_position",
+            "label": "Image Position L/R",
+            "default": "image_left",
+            "options": [
+                {
+                    "value": "image_left",
+                    "label": "Image on Left"
+                },
+                {
+                    "value": "image_right",
+                    "label": "Image on Right"
+                }
+            ]
+        },
+        {
+            "type": "color",
+            "id": "background_color",
+            "label": "Section background color",
+            "default": "#fff"
+        },
+        {
+            "type": "range",
+            "id": "mob_padding_top",
+            "min": 0,
+            "max": 200,
+            "step": 5,
+            "unit": "px",
+            "label": "Section padding top - small screens",
+            "default": 80
+        },
+        {
+            "type": "range",
+            "id": "mob_padding_bottom",
+            "min": 0,
+            "max": 200,
+            "step": 5,
+            "unit": "px",
+            "label": "Section padding bottom - small screens",
+            "default": 80
+        },
+        {
+            "type": "range",
+            "id": "desk_padding_top",
+            "min": 0,
+            "max": 200,
+            "step": 5,
+            "unit": "px",
+            "label": "Section padding top - big screens",
+            "default": 100
+        },
+        {
+            "type": "range",
+            "id": "desk_padding_bottom",
+            "min": 0,
+            "max": 200,
+            "step": 5,
+            "unit": "px",
+            "label": "Section padding bottom - big screens",
+            "default": 100
+        }
+    ],
+    "blocks": [
+        {
+            "type": "question_and_answer",
+            "name": "Q & A",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "question",
+                    "label": "Question"
+                },
+                {
+                    "type": "richtext",
+                    "id": "answer",
+                    "label": "Answer"
+                }
+            ]
+        }
+    ]
+    }
+{% endschema %}

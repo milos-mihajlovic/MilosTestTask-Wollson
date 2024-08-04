@@ -5,6 +5,12 @@
   --alpha-badge-border: 0.1;
 }
 
+.wrapper {
+  max-width: 1440px;
+  padding: 0 20px;
+  margin: 0 auto;
+}
+
 .product-card-wrapper .card,
 .contains-card--product {
   --border-radius: var(--product-card-corner-radius);

@@ -1,6 +1,6 @@
 {{ 'milos-marquee.css' | asset_url | stylesheet_tag }}
 
-<script src="{{ 'bundle.js' | asset_url }}"></script>
+<script src="{{ 'milos-marquee.js' | asset_url }}" defer></script>
 
 {% liquid
     assign section_target = section.settings.section_target
@@ -143,9 +143,6 @@
         {% endif %}
     </wls-usp>
 </div>
-
-
-{% comment %} <script src="{{ 'milos-marquee.js' | asset_url }}" defer="defer"></script> {% endcomment %}
 
 
 {% schema %}
