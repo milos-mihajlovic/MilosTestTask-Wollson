@@ -107,10 +107,10 @@
                 "usps_gap": 30,
                 "background_color": "#bdb8f4",
                 "text_color": "#000000",
-                "mob_padding_top": 40,
-                "mob_padding_bottom": 40,
-                "desk_padding_top": 40,
-                "desk_padding_bottom": 40
+                "mob_padding_top": 20,
+                "mob_padding_bottom": 20,
+                "desk_padding_top": 30,
+                "desk_padding_bottom": 30
             }
         },
         "milos_ugc_qDFpAz": {
@@ -162,9 +162,70 @@
                 "columns_desktop": 4,
                 "cta_text": "view all products",
                 "cta_url": "#",
-                "cta_style": "c-button__style-1",
-                "background_color": "#fff",
-                "font_color": "#000",
+                "background_color": "#fcfbe7",
+                "font_color": "#121212",
+                "mob_padding_top": 40,
+                "mob_padding_bottom": 40,
+                "desk_padding_top": 50,
+                "desk_padding_bottom": 50
+            }
+        },
+        "milos_faq_yE9GzM": {
+            "type": "milos-faq",
+            "blocks": {
+                "question_and_answer_6bGNPk": {
+                    "type": "question_and_answer",
+                    "settings": {
+                        "question": "QUESTION",
+                        "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut venenatis velit ut augue rhoncus, ut commodo nibh ornare. Curabitur vehicula ipsum arcu, non tincidunt justo pretium quis. Maecenas felis magna, lacinia in metus vel, auctor convallis lorem. Sed rhoncus molestie vehicula. Cras sodales tortor lorem, in mattis libero tincidunt nec. Etiam in porta enim. Sed diam nisl, finibus ut purus sit amet, viverra efficitur diam. Nullam a sem vitae ligula iaculis hendrerit at ac erat.<\/p>"
+                    }
+                },
+                "question_and_answer_7iYBBe": {
+                    "type": "question_and_answer",
+                    "settings": {
+                        "question": "QUESTION",
+                        "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut venenatis velit ut augue rhoncus, ut commodo nibh ornare. Curabitur vehicula ipsum arcu, non tincidunt justo pretium quis. Maecenas felis magna, lacinia in metus vel, auctor convallis lorem. Sed rhoncus molestie vehicula. Cras sodales tortor lorem, in mattis libero tincidunt nec. Etiam in porta enim. Sed diam nisl, finibus ut purus sit amet, viverra efficitur diam. Nullam a sem vitae ligula iaculis hendrerit at ac erat.<\/p>"
+                    }
+                },
+                "question_and_answer_Ut6UPB": {
+                    "type": "question_and_answer",
+                    "settings": {
+                        "question": "QUESTION",
+                        "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut venenatis velit ut augue rhoncus, ut commodo nibh ornare. Curabitur vehicula ipsum arcu, non tincidunt justo pretium quis. Maecenas felis magna, lacinia in metus vel, auctor convallis lorem. Sed rhoncus molestie vehicula. Cras sodales tortor lorem, in mattis libero tincidunt nec. Etiam in porta enim. Sed diam nisl, finibus ut purus sit amet, viverra efficitur diam. Nullam a sem vitae ligula iaculis hendrerit at ac erat.<\/p>"
+                    }
+                },
+                "question_and_answer_7qH6mU": {
+                    "type": "question_and_answer",
+                    "settings": {
+                        "question": "QUESTION",
+                        "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut venenatis velit ut augue rhoncus, ut commodo nibh ornare. Curabitur vehicula ipsum arcu, non tincidunt justo pretium quis. Maecenas felis magna, lacinia in metus vel, auctor convallis lorem. Sed rhoncus molestie vehicula. Cras sodales tortor lorem, in mattis libero tincidunt nec. Etiam in porta enim. Sed diam nisl, finibus ut purus sit amet, viverra efficitur diam. Nullam a sem vitae ligula iaculis hendrerit at ac erat.<\/p>"
+                    }
+                }
+            },
+            "block_order": [
+                "question_and_answer_6bGNPk",
+                "question_and_answer_7iYBBe",
+                "question_and_answer_Ut6UPB",
+                "question_and_answer_7qH6mU"
+            ],
+            "settings": {
+                "section_target": "",
+                "image_mobile": "shopify:\/\/shop_images\/cropped-Sermonwholebean1_1100x_7257c3eb-7c74-48a9-a1d6-7125b87ea109.jpg",
+                "image_desktop": "shopify:\/\/shop_images\/cropped-Sermonwholebean1_1100x_7257c3eb-7c74-48a9-a1d6-7125b87ea109.jpg",
+                "pre_headline": "pre-headline",
+                "pre_headline_element": "3",
+                "headline": "Headline Goes Here",
+                "headline_element": "2",
+                "sub_headline": "Our goal is to do right by the planet, but we know you can’t do right by the planet without doing right by the people.",
+                "sub_headline_element": "4",
+                "primary_button_text": "Shop now",
+                "primary_button_url": "#",
+                "primary_button_new_tab": false,
+                "secondary_button_text": "",
+                "secondary_button_url": "",
+                "secondary_button_new_tab": false,
+                "image_position": "image_left",
+                "background_color": "#f9e6e6",
                 "mob_padding_top": 80,
                 "mob_padding_bottom": 80,
                 "desk_padding_top": 100,
@@ -175,6 +236,7 @@
     "order": [
         "image_banner",
         "milos_marquee_CAkJDT",
-        "milos_ugc_qDFpAz"
+        "milos_ugc_qDFpAz",
+        "milos_faq_yE9GzM"
     ]
 }
