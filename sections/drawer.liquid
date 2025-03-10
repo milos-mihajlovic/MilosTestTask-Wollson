@@ -8,7 +8,7 @@
         <span class="cart-drawer-header-right-items">{{ cart.item_count }} items</span>
 
         <button class="cart-drawer-header-right-close" type="button">
-          {% render 'x.svg' %}
+          x
         </button>
       </div>
     </header>
@@ -21,7 +21,7 @@
           {% for item in cart.items %}
             <div class="cart-drawer-item" data-line-item-key="{{ item.key }}">
               <div class="cart-drawer-item-image">
-                <img src="{{ item.image | img_url: '200x' }}" alt="{{ item.title }}">
+               {{ item.image | image_url: width: 300 | image_tag }}
               </div>
               <div class="cart-drawer-item-main">
                 <div class="cart-drawer-item-main-flex">
@@ -32,7 +32,7 @@
                     <span>{{ item.variant.title }}</span>
                     <div class="cart-drawer-quantity-selector">
                       <button class="cart-drawer-quantity-selector-minus" type="button">
-                        {% render 'minus.svg' %}
+                        -
                       </button>
                       <input type="text" readonly value="{{ item.quantity }}">
                       <button class="cart-drawer-quantity-selector-plus" type="button">{% render 'plus.svg' %}</button>
