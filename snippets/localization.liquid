@@ -1,13 +1,12 @@
-{%- assign language_selector = false -%}
-{%- assign country_selector = false -%}
 
-{%- if section.settings.show_country_selector and localization.available_countries.size > 1 -%}
+
+
   {%- assign country_selector = true -%}
-{%- endif -%}
 
-{%- if section.settings.show_language_selector and localization.available_languages.size > 1 -%}
+
+
   {%- assign language_selector = true -%}
-{%- endif -%}
+
 
 {%- assign form_id = 'localization_form_' | append: input_prefix -%}
 {%- form 'localization', id: form_id, class: 'selectors-form' -%}
