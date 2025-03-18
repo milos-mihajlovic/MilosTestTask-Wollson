@@ -7,7 +7,7 @@
 
   {%- assign language_selector = true -%}
 
-
+<h1>test {{ localization.country.iso_code }}</h1>
 {%- assign form_id = 'localization_form_' | append: input_prefix -%}
 {%- form 'localization', id: form_id, class: 'selectors-form' -%}
   {%- if country_selector -%}
