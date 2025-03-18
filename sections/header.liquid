@@ -236,12 +236,12 @@
     {%- endif -%}
 
 
-     {%- if section.settings.show_country_selector or section.settings.show_language_selector -%}
+     
               <!-- CURRENCY CONVERTER -->
               <div class="utils__item utils__item--currency header-localization header-localization--desktop hide-for-search">
                 {% render 'localization', input_prefix: 'desktop-header' %}
               </div>
-      {%- endif -%}
+     
 
     <div class="header__icons{% if section.settings.enable_country_selector or section.settings.enable_language_selector %} header__icons--localization header-localization{% endif %}">
       <div class="desktop-localization-wrapper">
